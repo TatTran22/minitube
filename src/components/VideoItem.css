@@ -1,0 +1,38 @@
+.video-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.video-item img {
+  width: auto;
+  height: 85px;
+}
+
+.video-item-content {
+  padding: 0rem 0.5rem 0 0.8rem;
+  display: flex;
+  flex-direction: column;
+}
+.video-item-content-title {
+  margin: 0 0 4px 0;
+  height: 2.2rem;
+  color: #f5f8fa;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  white-space: normal;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.video-item-content-channel {
+  font-size: 0.8rem;
+  margin: auto auto auto 0;
+  color: #bfccd6;
+}
+.video-item-content-extra {
+  color: #bfccd6;
+}
