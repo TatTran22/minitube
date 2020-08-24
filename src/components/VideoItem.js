@@ -1,4 +1,5 @@
 import React from 'react';
+import he from 'he';
 import './VideoItem.css';
 class VideoItem extends React.Component {
   constructor(props) {
@@ -31,58 +32,58 @@ class VideoItem extends React.Component {
     const hour = currentHour - publishedHour;
     const min = currentMinute - publishedMinute;
     const sec = currentSecond - publishedSecond;
-    console.log(`${year} ${month} - ${hour}:${min}:${sec}`);
+    // console.log(`${year} ${month} - ${hour}:${min}:${sec}`);
 
     if (year) {
-      this.setState({ time: `${year} ${year === 1 ? 'year' : 'years'} ago` });
+      this.setState({ time: `${year} year${year === 1 ? '' : 's'} ago` });
       return;
     } else if (month) {
-      this.setState({
-        time: `${month} ${month === 1 ? 'month' : 'months'} ago`,
-      });
+      this.setState({ time: `${month} month${month === 1 ? '' : 's'} ago` });
       return;
     } else if (date) {
-      this.setState({ time: `${date} ${date === 1 ? 'day' : 'days'} ago` });
+      this.setState({ time: `${date} day${date === 1 ? '' : 's'} ago` });
       return;
     } else if (hour) {
-      this.setState({
-        time: `${hour} ${hour === 1 ? 'hour' : 'hours'} ago`,
-      });
+      this.setState({ time: `${hour} hour${hour === 1 ? '' : 's'} ago` });
       return;
     } else if (min) {
-      this.setState({
-        time: `${min} ${min === 1 ? 'minute' : 'minutes'} ago`,
-      });
+      this.setState({ time: `${min} minute${min === 1 ? '' : 's'} ago` });
       return;
     } else if (sec) {
-      this.setState({
-        time: `${sec} ${sec === 1 ? 'second' : 'seconds'} ago`,
-      });
+      this.setState({ time: `${sec} second${sec === 1 ? '' : 's'} ago` });
       return;
     } else {
-      this.setState({ time: "I don't know when it release" });
+      this.setState({ time: "I don't know when it release 😥😥😥" });
       return;
     }
   }
 
   render() {
-    const { video } = this.props;
+    const { video, selectedVideo } = this.props;
     const { time } = this.state;
 
     return (
       <div className='video-item'>
-        <img
-          alt={video.snippet.title}
-          src={video.snippet.thumbnails.medium.url}
-        />
-        <div className='video-item-content'>
-          <h3 className='video-item-content-title'>{`${video.snippet.title}`}</h3>
-          <div className='video-item-content-channel'>
-            {video.snippet.channelTitle}
-          </div>
-          <div className='video-item-content-extra'>
-            {/* <span className='video-item-content-views'>{video.snippet.}</span> */}
-            <span className='video-item-content-publishedAt'>{time}</span>
+        <div className='video-item-card'>
+          <img
+            onClick={() => selectedVideo(video)}
+            alt={video.snippet.title}
+            src={video.snippet.thumbnails.medium.url}
+          />
+          <div className='video-item-content'>
+            <div
+              className='video-item-content-title'
+              onClick={() => selectedVideo(video)}
+            >
+              {he.decode(video.snippet.title)}
+            </div>
+            <div className='video-item-content-channel'>
+              {video.snippet.channelTitle}
+            </div>
+            <div className='video-item-content-extra'>
+              {/* <span className='video-item-content-views'>{video.snippet.}</span> */}
+              <span className='video-item-content-publishedAt'>{time}</span>
+            </div>
           </div>
         </div>
       </div>
