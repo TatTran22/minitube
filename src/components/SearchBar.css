@@ -2,12 +2,11 @@
 @import '~@blueprintjs/core/lib/css/blueprint.css';
 @import '~@blueprintjs/icons/lib/css/blueprint-icons.css';
 
-.search-bar {
+.header .search-bar {
   width: 100%;
-  max-width: 500px;
-  display: flex;
-  align-items: center;
+  max-width: 400px;
+  margin-left: 20px;
 }
-.search-bar form {
+.header .search-bar form {
   width: 100%;
 }

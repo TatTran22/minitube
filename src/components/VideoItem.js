@@ -2,14 +2,8 @@ import React from 'react';
 import he from 'he';
 import './VideoItem.css';
 class VideoItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      time: '',
-    };
-  }
-  componentDidMount() {
-    const publishedAt = Date.parse(this.props.video.snippet.publishedAt);
+  timeAgoCal = (time) => {
+    const publishedAt = Date.parse(time);
     const publishedTime = new Date(publishedAt);
     const publishedYear = publishedTime.getFullYear();
     const publishedMonth = publishedTime.getMonth();
@@ -35,33 +29,47 @@ class VideoItem extends React.Component {
     // console.log(`${year} ${month} - ${hour}:${min}:${sec}`);
 
     if (year) {
-      this.setState({ time: `${year} year${year === 1 ? '' : 's'} ago` });
-      return;
+      return `${year} year${year === 1 ? '' : 's'} ago`;
     } else if (month) {
-      this.setState({ time: `${month} month${month === 1 ? '' : 's'} ago` });
-      return;
+      return `${month} month${month === 1 ? '' : 's'} ago`;
     } else if (date) {
-      this.setState({ time: `${date} day${date === 1 ? '' : 's'} ago` });
-      return;
+      return `${date} day${date === 1 ? '' : 's'} ago`;
     } else if (hour) {
-      this.setState({ time: `${hour} hour${hour === 1 ? '' : 's'} ago` });
-      return;
+      return `${hour} hour${hour === 1 ? '' : 's'} ago`;
     } else if (min) {
-      this.setState({ time: `${min} minute${min === 1 ? '' : 's'} ago` });
-      return;
+      return `${min} minute${min === 1 ? '' : 's'} ago`;
     } else if (sec) {
-      this.setState({ time: `${sec} second${sec === 1 ? '' : 's'} ago` });
-      return;
+      return `${sec} second${sec === 1 ? '' : 's'} ago`;
     } else {
-      this.setState({ time: "I don't know when it release 😥😥😥" });
-      return;
+      return "I don't know when it release 😥😥😥";
     }
-  }
+  };
+
+  viewsCount = (num, fixed) => {
+    if (num === null) {
+      return null;
+    } // terminate early
+    if (num === 0) {
+      return '0';
+    } // terminate early
+    fixed = !fixed || fixed < 0 ? 0 : fixed; // number of decimal places to show
+
+    let b = parseInt(num).toPrecision(2).split('e'), // get power
+      k = b.length === 1 ? 0 : Math.floor(Math.min(b[1].slice(1), 14) / 3), // floor at decimals, ceiling at trillions
+      c =
+        k < 1
+          ? num.toFixed(0 + fixed)
+          : (num / Math.pow(10, k * 3)).toFixed(1 + fixed), // divide by power
+      d = c < 0 ? c : Math.abs(c), // enforce -0 is 0
+      e = d + ['', 'K', 'M', 'B', 'T'][k]; // append power
+    return e;
+  };
 
   render() {
     const { video, selectedVideo } = this.props;
-    const { time } = this.state;
-
+    // const { viewCount, timeAgo } = this.state;
+    const timeAgo = this.timeAgoCal(video.snippet.publishedAt);
+    const viewCount = this.viewsCount(video.statistics.viewCount, 0);
     return (
       <div className='video-item'>
         <div className='video-item-card'>
@@ -81,8 +89,10 @@ class VideoItem extends React.Component {
               {video.snippet.channelTitle}
             </div>
             <div className='video-item-content-extra'>
-              {/* <span className='video-item-content-views'>{video.snippet.}</span> */}
-              <span className='video-item-content-publishedAt'>{time}</span>
+              <span className='video-item-content-views'>
+                {`${viewCount} views`}
+              </span>
+              <span className='video-item-content-publishedAt'>{` • ${timeAgo}`}</span>
             </div>
           </div>
         </div>

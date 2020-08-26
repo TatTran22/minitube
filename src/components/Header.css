@@ -1,14 +1,12 @@
 .header {
+  height: auto;
   display: flex;
-  flex-direction: row;
-  height: 4rem;
+  justify-content: space-between;
+  padding-left: 3rem;
+  padding-right: 1rem;
 }
 
 .header img {
-  height: 80%;
   width: auto;
-}
-
-.header .search-bar {
-  padding-left: 1rem;
+  height: 24px;
 }

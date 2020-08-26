@@ -1,19 +1,30 @@
 import React from 'react';
 import VideoItem from './VideoItem';
+import youtube from '../api/Youtube';
+// import SearchBar from './SearchBar';
 
-const VideosList = ({ videos, selectedVideo }) => {
-  // const handleSelectVideo = (e) => {
-  //   selectedVideo = e;
-  // };
-  const renderList = videos.map((video) => {
+class VideosList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    const { videos, selectedVideo, searchSubmited } = this.props;
+    const renderList = videos.map((video) => {
+      return (
+        <VideoItem
+          key={video.id.videoId}
+          video={video}
+          selectedVideo={selectedVideo}
+        />
+      );
+    });
     return (
-      <VideoItem
-        key={video.id.videoId}
-        video={video}
-        selectedVideo={selectedVideo}
-      />
+      <div className={`${searchSubmited ? 'query-videos-list' : ''}`}>
+        {renderList}
+      </div>
     );
-  });
-  return <div>{renderList}</div>;
-};
+  }
+}
 export default VideosList;

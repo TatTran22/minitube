@@ -1,5 +1,5 @@
 import React from 'react';
-import youtubeLogoLight from './../static/yt_logo_rgb_light.png';
+// import youtubeLogoLight from './../static/yt_logo_rgb_light.png';
 import youtubeLogoDark from './../static/yt_logo_rgb_dark.png';
 
 import SearchBar from './SearchBar';

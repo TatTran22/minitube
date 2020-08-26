@@ -12,8 +12,6 @@ import VideosList from './VideosList';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
-const KEY = 'AIzaSyBwFQ-sefzkTNyzeaRFmjiAg8pfGDIod3g';
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -23,25 +21,67 @@ class App extends React.Component {
       videos: [],
       selectedVideo: null,
       queryVideoTitle: '',
+      searchSubmited: true,
     };
   }
+  handleResponse = async (res) => {
+    let IDs = res.data.items.map((video) => {
+      return video.id.videoId ? video.id.videoId : video.id;
+    });
+    let id = IDs.toString();
+    const res2 = await youtube.get('/videos', {
+      params: {
+        id: id,
+        part: 'snippet,contentDetails,statistics',
+        maxResults: 10,
+        type: 'video',
+      },
+    });
+    return res2;
+  };
 
   handleSearchSubmit = async (e) => {
     this.setState({ searchValue: e, queryVideoTitle: 'Search results:' });
+
     const res = await youtube.get('/search', {
       params: {
         q: e,
         part: 'snippet',
         maxResults: 10,
         type: 'video',
-        key: `${KEY}`,
       },
     });
-    this.setState({ videos: res.data.items });
+    const res2 = await this.handleResponse(res);
+    this.setState({
+      videos: res2.data.items,
+      queryVideoTitle: `Results for : '${e}'`,
+    });
   };
 
   handleSelectVideo = (video) => {
     this.setState({ selectedVideo: video });
+  };
+
+  componentDidMount = async () => {
+    const res = await youtube.get('/videos', {
+      params: {
+        part: 'snippet,contentDetails,statistics',
+        chart: 'mostPopular',
+        regionCode: 'VN',
+        type: 'video',
+        maxResults: 10,
+      },
+    });
+
+    const res2 = await this.handleResponse(res);
+
+    this.setState({
+      videos: res2.data.items,
+      searchSubmited: 1,
+      queryVideoTitle: 'Top trending Vietnam',
+      selectedVideo: res2.data.items[0],
+    });
+    console.log(res2.data.items);
   };
 
   render() {
@@ -61,6 +101,9 @@ class App extends React.Component {
                 <VideosList
                   videos={this.state.videos}
                   selectedVideo={this.handleSelectVideo}
+                  searchSubmited={
+                    this.state.searchSubmited || this.state.searchValue
+                  }
                 />
               </div>
             </div>
