@@ -27,9 +27,14 @@
 .video-detail-description {
   margin: 0.3rem 1rem 0.3rem 2rem;
   height: 100%;
-  display: -webkit-box;
+  /* display: -webkit-box;
   -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical; */
+}
+
+.video-detail-channel {
+  padding: 0.5rem 0;
+  /* background-color: #394b59; */
 }
 
 .video-embed {
@@ -37,11 +42,13 @@
   position: relative;
   width: 100%;
 }
+
 .video-embed::after {
   padding-top: 56.25%;
   display: block;
   content: '';
 }
+
 .video-embed iframe {
   position: absolute;
   top: 0;

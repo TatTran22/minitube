@@ -50,15 +50,15 @@ const App = () => {
         type: 'video',
       },
     });
-    const res2 = await this.handleResponse(res);
+    const res2 = await handleResponse(res);
 
     setVideos(res2.data.items);
     setQueryVideoTitle(`Results for : '${e}'`);
   };
 
-  const handleSelectVideo = (video) => {
-    setSelectedVideo(video);
-  };
+  // const handleSelectVideo = (video) => {
+  //   setSelectedVideo(video);
+  // };
 
   useEffect(() => {
     async function fetchData() {
@@ -100,7 +100,7 @@ const App = () => {
               <div className='query-videos-title'>{queryVideoTitle}</div>
               <VideosList
                 videos={videos}
-                selectedVideo={handleSelectVideo}
+                selectedVideo={setSelectedVideo} //(video) => setSelectedVideo(video)
                 searchSubmitted={searchSubmitted || searchValue}
               />
             </div>

@@ -5,27 +5,16 @@ class VideoItem extends React.Component {
   timeAgoCal = (time) => {
     const publishedAt = Date.parse(time);
     const publishedTime = new Date(publishedAt);
-    const publishedYear = publishedTime.getFullYear();
-    const publishedMonth = publishedTime.getMonth();
-    const publishedDate = publishedTime.getDate();
-    const publishedHour = publishedTime.getHours();
-    const publishedMinute = publishedTime.getMinutes();
-    const publishedSecond = publishedTime.getSeconds();
-
     const currentTime = new Date(Date.now());
-    const currentYear = currentTime.getFullYear();
-    const currentMonth = currentTime.getMonth();
-    const currentDate = currentTime.getDate();
-    const currentHour = currentTime.getHours();
-    const currentMinute = currentTime.getMinutes();
-    const currentSecond = currentTime.getSeconds();
-
-    const year = currentYear - publishedYear;
-    const month = currentMonth - publishedMonth;
-    const date = currentDate - publishedDate;
-    const hour = currentHour - publishedHour;
-    const min = currentMinute - publishedMinute;
-    const sec = currentSecond - publishedSecond;
+    console.log(
+      `Time: ${time} - publishAt: ${publishedAt} - publishTime: ${publishedTime}`
+    );
+    const year = currentTime.getFullYear() - publishedTime.getFullYear();
+    const month = currentTime.getMonth() - publishedTime.getMonth();
+    const date = currentTime.getDate() - publishedTime.getDate();
+    const hour = currentTime.getHours() - publishedTime.getHours();
+    const min = currentTime.getMinutes() - publishedTime.getMinutes();
+    const sec = currentTime.getSeconds() - publishedTime.getSeconds();
     // console.log(`${year} ${month} - ${hour}:${min}:${sec}`);
 
     if (year) {

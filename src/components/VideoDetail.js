@@ -27,7 +27,7 @@ const VideoDetail = ({ video }) => {
             title={he.decode(video.snippet.title)}
             src={`https://www.youtube.com/embed/${
               video.id.videoId ? video.id.videoId : video.id
-            }?rel=0&autoplay=0`}
+            }?rel=0&autoplay=1`}
             frameborder='0'
             allowfullscreen='1'
           ></iframe>
@@ -67,6 +67,11 @@ const VideoDetail = ({ video }) => {
               <Button text='Description' />
             </Popover>
           </div>
+        </div>
+        <div className='video-detail-channel'>
+          <H4 className='video-detail-channel-title'>
+            {video.snippet.channelTitle}
+          </H4>
         </div>
       </div>
     );
